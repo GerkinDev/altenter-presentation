@@ -1,16 +1,16 @@
 // Audio config
-let audioSections=[];
 let a = [];
+let audioSections=[];
 let countDown = 6;
 for(let i=0;i<7;i++){
     // Load and push sounds
-	a.push(new Pizzicato.Sound({ 
         source: 'file',
+	a.push(new Pizzicato.Sound({ 
         options: { path: "./assets/sounds/snd-0"+(i+1)+".mp3" }
     }, () => { // onLoad...
+            // all audio files are loaded
         countDown--;
         if (countDown === 0) {
-            // all audio files are loaded
             for(let b=2;b<6;b++){
                 a[b].on("end", ()=>{
                     a[b+1].play();
@@ -19,23 +19,24 @@ for(let i=0;i<7;i++){
         }
     }));
 }
-
 audioSections.push(a[0]);
+
 audioSections.push(a[1]);
-audioSections.push(a[2]);
 
-// Audio function
-function playAudioSection( section, config ){
-    if( section > 0 && section < audioSections.length ) {
-        audioSections[section].play();    
-    } else {
-        return false;
-    }
-    
-    return true;
 }
+    return true;
+    
+    }
+        return false;
+    } else {
+        audioSections[section].play();    
+    if( section > 0 && section < audioSections.length ) {
+function playAudioSection( section, config ){
+// Audio function
 
+audioSections.push(a[2]);
 // Get DOM elements
+const $article = $('article');
 const $caption = $('figcaption');
 const $sections = $caption.children('section');
 const $progress = $('.progress');
@@ -46,6 +47,9 @@ const $toggleSound = $('#toggle-sound');
 const $soundIcon = $toggleSound.children('i');
 const $toggleAutoPlay = $('#toggle-autoplay');
 const $autoPlayIcon = $toggleAutoPlay.children('i');
+const $fullScreen = $('#enable-fullscreen');
+const $resizeHandle = $('#resize-handle');
+const $toggleText = $('#toggle-text');
 
 // Set other vars
 const cursorHeight = $cursor.outerHeight();
@@ -57,12 +61,25 @@ const autoPlayStates = {
 	false: 'fa-play',
 	true:  'fa-pause',
 };
+const fullScreenMethod = (() => {
+	const elem = $article.get(0);
+	const prefixes = ['', 'webkit', 'moz', 'ms'];
+	const suffixes = ['FullScreen', 'Fullscreen'];
+	for(let i = 0, I = prefixes.length; i < I; i++){
+		for(let j = 0, J = suffixes.length; j < J; j++){
+			const method = `${prefixes[i]}Request${suffixes[j]}`;
+			if(elem[method]){
+				return method;
+			}
+		}
+	}
+})();
 
 // Flags
 let allowScroll = true;
 let autoPlay = false;
-let supportsSpeechSynthesis = false;
 let currentUtter = null;
+let supportsSpeechSynthesis = typeof speechSynthesis !== 'undefined';
 
 // Loadable data
 let section = (() => {
@@ -82,6 +99,9 @@ const refreshScollAndCursor = target => {
 const changeSlide = (to, from) => {
 	if(allowScroll){
 		allowScroll = false;
+		setTimeout(() => {
+			allowScroll = true;
+		}, 250);
 		console.log(`Changing slide from ${from} to ${to}`);
 		const target = $sections.get(to);
 		// Do scroll
@@ -104,9 +124,6 @@ const changeSlide = (to, from) => {
 		// Finalize
 		section = to;
 		location.hash = target.id;
-		setTimeout(() => {
-			allowScroll = true;
-		}, 250);
 	} else {
 		console.warn('Scroll not yet authorized');
 	}
@@ -160,35 +177,57 @@ const maybeAutoPlayNext = () => {
 	}
 }
 
-// Bind events
-$caption.on('DOMMouseScroll mousewheel', handleScroll);
-$(window).resize(() => {
-	if(section !== -1){
-		refreshScollAndCursor($($sections.get(section)));
-	}
-});
-$toggleSound.click(() => {
-	soundEnabled = !soundEnabled;
-	$soundIcon.removeClass(soundStates[!soundEnabled]).addClass(soundStates[soundEnabled]);
-	if(soundEnabled){
-		localStorage.removeItem('soundDisabled');
-	} else {
-		localStorage.setItem('soundDisabled', 'yes');
-	}
-	if(currentUtter && !soundEnabled){
-		speechSynthesis.cancel();
-	}
-});
-$toggleAutoPlay.click(() => {
-	autoPlay = !autoPlay;
-	$autoPlayIcon.removeClass(autoPlayStates[!autoPlay]).addClass(autoPlayStates[autoPlay]);
-});
-if(typeof speechSynthesis !== 'undefined'){
-	supportsSpeechSynthesis = true;
-}
-
-// Initialize DOM
 $(document).ready(() => {
+	// Bind events
+	$caption.on('DOMMouseScroll mousewheel', handleScroll);
+	$(window).resize(() => {
+		if(section !== -1){
+			refreshScollAndCursor($($sections.get(section)));
+		}
+	});
+	$toggleSound.click(() => {
+		soundEnabled = !soundEnabled;
+		$soundIcon.removeClass(soundStates[!soundEnabled]).addClass(soundStates[soundEnabled]);
+		if(soundEnabled){
+			localStorage.removeItem('soundDisabled');
+		} else {
+			localStorage.setItem('soundDisabled', 'yes');
+		}
+		if(currentUtter && !soundEnabled){
+			speechSynthesis.cancel();
+		}
+	});
+	$toggleAutoPlay.click(() => {
+		autoPlay = !autoPlay;
+		$autoPlayIcon.removeClass(autoPlayStates[!autoPlay]).addClass(autoPlayStates[autoPlay]);
+	});
+	$fullScreen.click(() => {
+		$article.get(0)[fullScreenMethod]();
+	});
+	(() => {
+		let startPos = false;
+		$resizeHandle.mousedown(event => {
+			if(event.buttons & 1){
+				startPos = event.clientX;
+			}
+		})
+		$article.mousemove(event => {
+			if(startPos !== false){
+				console.log('Left mouse button pressed', startPos);
+			}
+		}).mouseup(event => {
+			if((event.buttons & 1) === 0){
+				startPos = false;
+			}
+		});
+	})();
+	$toggleText.mousemove(event => {
+		event.preventDefault();
+		event.stopPropagation();
+		return false;
+	}).click(console.log);
+
+	// Initialize DOM
 	$soundIcon.addClass(soundStates[soundEnabled]);
 	$autoPlayIcon.addClass(autoPlayStates[autoPlay]);
 	$cursor.css({top: getVMiddle($caption.find('h1,h2,h3,h4,h5,h6')) - cursorHeight / 2});

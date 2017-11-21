@@ -13,6 +13,24 @@ $progress-color: #fecf23;
 		justify-content: stretch;
 		flex: 1 1 100%;
 	}
+	#resize-handle{
+		border-left: 5px double #333;
+		cursor: ew-resize;
+		position: relative;
+	}
+	#toggle-text{
+		position: absolute;
+		right: 5px;
+		padding: 10px;
+		background-color: rgba(32,32,32,0.2);
+		border: 1px solid #aaa;
+		border-right: none;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+	}
 	figcaption {
 		flex: 1 1 auto;
 		overflow: auto;
@@ -49,6 +67,7 @@ $progress-color: #fecf23;
 		position: absolute;
 		right: 0;
 		top: 0;
+		opacity: 0;
 	}
 
 	$foot-padding: 10px;

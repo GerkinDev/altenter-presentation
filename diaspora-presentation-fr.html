@@ -20,7 +20,7 @@
 					<section>Nous nous sommes imposés des processus de développement rigoureux, afin de maximiser maintenabilité,  fiabilité, qualité et compatibilité.
 						<ul>
 							<li>Les tests unitaires sont réalisés avec Travis-CI, CodeClimate & SauceLabs, sur Node 6, 7 et 8, ainsi que sur les navigateurs Google Chrome & Firefox.</li>
-							<li>Les dépendances sont inspectés pour d'éventuelles failles de sécurité en utilisant Gemnasium.</li>
+							<li>Les dépendances sont inspectées pour d'éventuelles failles de sécurité en utilisant Gemnasium.</li>
 							<li>Une norme stricte est validée avec CodeClimate.</li>
 							<li>Enfin, la bibliothèque est concaténée et transtypée en EcmaScript 5.</li>
 						</ul>
@@ -28,17 +28,20 @@
 
 					<i id="cursor"></i>
 				</figcaption>
+				<div id="resize-handle">
+					<div id="toggle-text"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+				</div>
 				<img width="400" height="400" src=""/>
 			</figure>
 			<footer>
 				<div class="progress" data-progress="0%"><span></span></div>
 				<button id="toggle-autoplay" title="Toggle auto-play" class="player-button"><i class="fa" aria-hidden="true" aria-label="Toggle auto-play"></i></button>
+				<button id="enable-fullscreen" title="Go fullscreen" class="player-button"><i class="fa fa-arrows-alt" aria-hidden="true" aria-label="Toggle auto-play"></i></button>
 				<button id="toggle-sound" title="Toggle sound" class="player-button"><i class="fa" aria-hidden="true" aria-label="Toggle sound"></i></button>
 				<span>Something in the footer</span>
 			</footer>
 		</article>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="assets/js/Pizzicato.min.js"></script>
-        <script type="text/javascript" src="assets/js/presentation.js"></script>
+		<script type="text/javascript" src="assets/js/presentation.js"></script>
 	</body>
 </html>
