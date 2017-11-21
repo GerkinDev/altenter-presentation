@@ -169,14 +169,25 @@ $( document ).ready(() => {
 	});
 	(() => {
 		let startPos = false;
+		let startWidth;
 		$resizeHandle.mousedown( event => {
 			if ( event.buttons & 1 ) {
 				startPos = event.clientX;
+				startWidth = $caption.outerWidth();
 			}
 		});
 		$article.mousemove( event => {
 			if ( startPos !== false ) {
-				console.log( 'Left mouse button pressed', startPos );
+				const newPos = event.clientX;
+				const newWidth = (startWidth - startPos) + newPos;
+				console.log( 'Left mouse button pressed', {
+					event,
+					startPos,
+					newPos,
+					startWidth,
+					newWidth,
+				});
+				$caption.css({flexBasis:newWidth});
 			}
 		}).mouseup( event => {
 			if ( 0 === ( event.buttons & 1 )) {
@@ -188,7 +199,10 @@ $( document ).ready(() => {
 		event.preventDefault();
 		event.stopPropagation();
 		return false;
-	}).click( console.log );
+	}).click( event => {
+		$caption.toggle();
+		$toggleText.toggleClass('text-hidden');
+	});
 
 	// Initialize DOM
 	$soundIcon.addClass( soundStates[soundEnabled]);

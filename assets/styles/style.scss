@@ -17,6 +17,13 @@ $progress-color: #fecf23;
 		border-left: 5px double #333;
 		cursor: ew-resize;
 		position: relative;
+		-webkit-touch-callout: none; /* iOS Safari */
+		-webkit-user-select: none; /* Safari */
+		-khtml-user-select: none; /* Konqueror HTML */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+		user-select: none; /* Non-prefixed version, currently
+		supported by Chrome and Opera */
 	}
 	#toggle-text{
 		position: absolute;
@@ -24,15 +31,36 @@ $progress-color: #fecf23;
 		padding: 10px;
 		background-color: rgba(32,32,32,0.2);
 		border: 1px solid #aaa;
-		border-right: none;
+		border-right-width: 0;
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 		top: 50%;
 		transform: translateY(-50%);
 		cursor: pointer;
+		transition: 0.5s all;
+
+		&.text-hidden{
+			left: 0;
+			right: auto;
+			border-bottom-right-radius: 5px;
+			border-top-right-radius: 5px;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-left-width: 0;
+			border-right-width: 1px;
+			
+			.fa{
+				transform: scaleX(-1);
+			}
+		}
+	}
+	img {
+		flex: 1 1 0;
+		align-self: center;
 	}
 	figcaption {
-		flex: 1 1 auto;
+		flex: 0 1 100%;
+		min-width: 200px;
 		overflow: auto;
 		position: relative;
 		padding: 0 15px;
@@ -50,10 +78,6 @@ $progress-color: #fecf23;
 			margin-left: -10px;
 			padding-left: 5px;
 		}
-	}
-	img {
-		flex: 0 0 auto;
-		align-self: center;
 	}
 
 	$cursor-height:10px;
