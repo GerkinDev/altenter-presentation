@@ -5,7 +5,7 @@ let countDown = 6;
 for ( let i = 0;i < 7;i++ ) {
 	// Load and push sounds
 	'file',
-	a.push( new Pizzicato.Sound({
+		a.push( new Pizzicato.Sound({
 		source:  'file',
 		options: {
 			path: `./assets/sounds/snd-${ ( `00${   i + 1 }` ).slice( -2 ) }.mp3`,
@@ -26,7 +26,6 @@ function playAudioSection( section, config ) {
 
 	return true;
 }
-
 
 // Get DOM elements
 const $article = $( 'article' );
@@ -197,14 +196,25 @@ $( document ).ready(() => {
 	});
 	(() => {
 		let startPos = false;
+		let startWidth;
 		$resizeHandle.mousedown( event => {
 			if ( event.buttons & 1 ) {
 				startPos = event.clientX;
+				startWidth = $caption.outerWidth();
 			}
 		});
 		$article.mousemove( event => {
 			if ( startPos !== false ) {
-				console.log( 'Left mouse button pressed', startPos );
+				const newPos = event.clientX;
+				const newWidth = (startWidth - startPos) + newPos;
+				console.log( 'Left mouse button pressed', {
+					event,
+					startPos,
+					newPos,
+					startWidth,
+					newWidth,
+				});
+				$caption.css({flexBasis:newWidth});
 			}
 		}).mouseup( event => {
 			if ( 0 === ( event.buttons & 1 )) {
@@ -216,7 +226,10 @@ $( document ).ready(() => {
 		event.preventDefault();
 		event.stopPropagation();
 		return false;
-	}).click( console.log );
+	}).click( event => {
+		$caption.toggle();
+		$toggleText.toggleClass('text-hidden');
+	});
 
 	// Initialize DOM
 	$soundIcon.addClass( soundStates[soundEnabled]);
