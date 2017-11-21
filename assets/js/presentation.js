@@ -1,56 +1,48 @@
 // Audio config
 let a = [];
-let audioSections=[];
+let audioSections = [];
 let countDown = 6;
-for(let i=0;i<7;i++){
+for ( let i = 0;i < 7;i++ ) {
 	// Load and push sounds
-	source: 'file',
-		a.push(new Pizzicato.Sound({
-        source: 'file',
-		options: { path: "./assets/sounds/snd-0"+(i+1)+".mp3" }
-	}, () => { // onLoad...
-		// all audio files are loaded
-		countDown--;
-		if (countDown === 0) {
-			for(let b=2;b<6;b++){
-				a[b].on("end", ()=>{
-					a[b+1].play();
-				});
-			}
-		}
+	'file',
+	a.push( new Pizzicato.Sound({
+		source:  'file',
+		options: {
+			path: `./assets/sounds/snd-${ ( `00${   i + 1 }` ).slice( -2 ) }.mp3`,
+		},
 	}));
 }
-audioSections.push(a[0]);
-audioSections.push(a[1]);
-audioSections.push(a[2]);
+audioSections.push( a[0]);
+audioSections.push( a[1]);
+audioSections.push( a[2]);
 
 // Audio function
-function playAudioSection( section, config ){
-	if( section > -1 || section < audioSections.length ) {
+function playAudioSection( section, config ) {
+	if ( section > -1 || section < audioSections.length ) {
 		audioSections[section].play();
 	} else {
-        return false;
-    }
+		return false;
+	}
 
 	return true;
 }
 
 
 // Get DOM elements
-const $article = $('article');
-const $caption = $('figcaption');
-const $sections = $caption.children('section');
-const $progress = $('.progress');
-const $progressIn = $progress.children('span');
-const $image = $('img');
-const $cursor = $('#cursor');
-const $toggleSound = $('#toggle-sound');
-const $soundIcon = $toggleSound.children('i');
-const $toggleAutoPlay = $('#toggle-autoplay');
-const $autoPlayIcon = $toggleAutoPlay.children('i');
-const $fullScreen = $('#enable-fullscreen');
-const $resizeHandle = $('#resize-handle');
-const $toggleText = $('#toggle-text');
+const $article = $( 'article' );
+const $caption = $( 'figcaption' );
+const $sections = $caption.children( 'section' );
+const $progress = $( '.progress' );
+const $progressIn = $progress.children( 'span' );
+const $image = $( 'img' );
+const $cursor = $( '#cursor' );
+const $toggleSound = $( '#toggle-sound' );
+const $soundIcon = $toggleSound.children( 'i' );
+const $toggleAutoPlay = $( '#toggle-autoplay' );
+const $autoPlayIcon = $toggleAutoPlay.children( 'i' );
+const $fullScreen = $( '#enable-fullscreen' );
+const $resizeHandle = $( '#resize-handle' );
+const $toggleText = $( '#toggle-text' );
 
 // Set other vars
 const cursorHeight = $cursor.outerHeight();
@@ -63,13 +55,13 @@ const autoPlayStates = {
 	true:  'fa-pause',
 };
 const fullScreenMethod = (() => {
-	const elem = $article.get(0);
-	const prefixes = ['', 'webkit', 'moz', 'ms'];
-	const suffixes = ['FullScreen', 'Fullscreen'];
-	for(let i = 0, I = prefixes.length; i < I; i++){
-		for(let j = 0, J = suffixes.length; j < J; j++){
-			const method = `${prefixes[i]}Request${suffixes[j]}`;
-			if(elem[method]){
+	const elem = $article.get( 0 );
+	const prefixes = [ '', 'webkit', 'moz', 'ms' ];
+	const suffixes = [ 'FullScreen', 'Fullscreen' ];
+	for ( let i = 0, I = prefixes.length; i < I; i++ ) {
+		for ( let j = 0, J = suffixes.length; j < J; j++ ) {
+			const method = `${ prefixes[i] }Request${ suffixes[j] }`;
+			if ( elem[method]) {
 				return method;
 			}
 		}
@@ -84,161 +76,159 @@ let supportsSpeechSynthesis = typeof speechSynthesis !== 'undefined';
 
 // Loadable data
 let section = (() => {
-	const hashMatch = location.hash.match(/^#section-(\d+)$/);
-	return hashMatch ? Math.min(parseInt(hashMatch[1]), $sections.length) : 0;
+	const hashMatch = location.hash.match( /^#section-(\d+)$/ );
+	return hashMatch ? Math.min( parseInt( hashMatch[1]), $sections.length ) : 0;
 })() - 1;
-let soundEnabled = localStorage.getItem('soundDisabled') ? false : true;
+let soundEnabled = localStorage.getItem( 'soundDisabled' ) ? false : true;
 
 
 const refreshScollAndCursor = target => {
-	$sections.removeClass('active');
-	target.addClass('active');
-	const targetMiddle = getVMiddle(target);
+	$sections.removeClass( 'active' );
+	target.addClass( 'active' );
+	const targetMiddle = getVMiddle( target );
 	$cursor.stop().animate({top: targetMiddle - cursorHeight / 2});
 	$caption.stop().animate({scrollTop: targetMiddle - $caption.height() / 2});
-}
-const changeSlide = (to, from) => {
-	if(allowScroll){
+};
+const changeSlide = ( to, from ) => {
+	if ( allowScroll ) {
 		allowScroll = false;
 		setTimeout(() => {
 			allowScroll = true;
-		}, 250);
-		console.log(`Changing slide from ${from} to ${to}`);
-		const target = $sections.get(to);
+		}, 250 );
+		console.log( `Changing slide from ${ from } to ${ to }` );
+		const target = $sections.get( to );
 		// Do scroll
-		refreshScollAndCursor($(target));
+		refreshScollAndCursor( $( target ));
 		// Update progress infos
-		const frac = ((to + 1) / $sections.length);
-		const percent = Math.round(frac * 1000) / 10 + '%';
-		$progress.attr('data-progress', percent);
+		const frac = (( to + 1 ) / $sections.length );
+		const percent = `${ Math.round( frac * 1000 ) / 10  }%`;
+		$progress.attr( 'data-progress', percent );
 		$progressIn.css({width: percent});
 		// Update image
-		$image.attr('src', 'http://lorempixel.com/400/400/cats/');
+		$image.attr( 'src', 'http://lorempixel.com/400/400/cats/' );
 		// For slides, expose the `doSlideTransition` method globally. It will take 3 parameters: from index, to index, & options hash
-		window.doSlideTransition && doSlideTransition(from, to, {
+		window.doSlideTransition && doSlideTransition( from, to, {
 			soundEnabled,
 			autoPlay,
 			fullScreen: false,
 		});
 		// Start speech synthesis
-		speechForElement(target);
+		speechForElement( target );
 		// Finalize
 		section = to;
 		location.hash = target.id;
 	} else {
-		console.warn('Scroll not yet authorized');
+		console.warn( 'Scroll not yet authorized' );
 	}
-}
+};
 const handleScroll = event => {
 	event.preventDefault();
-	if(event.originalEvent.wheelDelta /120 > 0) {
-		if(section > 0){
-			changeSlide(section - 1, section);
+	if ( event.originalEvent.wheelDelta / 120 > 0 ) {
+		if ( section > 0 ) {
+			changeSlide( section - 1, section );
 		} else {
-			console.warn('Can\'t go to previous section');
+			console.warn( 'Can\'t go to previous section' );
 		}
+	} else if ( section < $sections.length - 1 ) {
+		changeSlide( section + 1, section );
 	} else {
-		if(section < $sections.length - 1){
-			changeSlide(section + 1, section);
-		} else {
-			console.warn('Can\'t go to next section');
-		}
+		console.warn( 'Can\'t go to next section' );
 	}
 	return false;
-}
-const getVMiddle = element => parseInt(element.css('marginTop')) + element.height() / 2 + element.position().top + element.parent().scrollTop();
+};
+const getVMiddle = element => parseInt( element.css( 'marginTop' )) + element.height() / 2 + element.position().top + element.parent().scrollTop();
 const getTextFromDomElement = element => element.textContent;
 const speechForElement = element => {
 	// For audio sections prepared, expose the global method `playAudioSection`, that takes the index of the section, and an object reflecting current configuration. This function have to return a truthy value if it knows that section. If it returns a falsey value, the default speech synthesis will be used
-	if(window.playAudioSection && playAudioSection(section, {
+	if ( window.playAudioSection && playAudioSection( section, {
 		soundEnabled,
 		autoPlay,
 		fullScreen: false,
-	})){
+	})) {
 		// Function call already done
-	} else if(supportsSpeechSynthesis && soundEnabled){
+	} else if ( supportsSpeechSynthesis && soundEnabled ) {
 		speechSynthesis.cancel();
-		currentUtter = new SpeechSynthesisUtterance(getTextFromDomElement(element));
-		currentUtter.voice = getVoice(document.documentElement.lang);
-		speechSynthesis.speak(currentUtter);
-		$(currentUtter).on('end', maybeAutoPlayNext);
+		currentUtter = new SpeechSynthesisUtterance( getTextFromDomElement( element ));
+		currentUtter.voice = getVoice( document.documentElement.lang );
+		speechSynthesis.speak( currentUtter );
+		$( currentUtter ).on( 'end', maybeAutoPlayNext );
 	}
-}
+};
 const getVoice = lang => {
 	lang = lang || 'en';
-	const validVoices = speechSynthesis.getVoices().filter(voice => {
-		return voice.lang.startsWith(lang);
+	const validVoices = speechSynthesis.getVoices().filter( voice => {
+		return voice.lang.startsWith( lang );
 	});
 	return validVoices[0];
-}
+};
 const maybeAutoPlayNext = () => {
 	currentUtter = null;
-	if(autoPlay){
-		setTimeout(changeSlide.bind(null, section + 1, section), 1000);
+	if ( autoPlay ) {
+		setTimeout( changeSlide.bind( null, section + 1, section ), 1000 );
 	}
-}
+};
 
-$(document).ready(() => {
+$( document ).ready(() => {
 	// Bind events
-	$caption.on('DOMMouseScroll mousewheel', handleScroll);
-	$(window).resize(() => {
-		if(section !== -1){
-			refreshScollAndCursor($($sections.get(section)));
+	$caption.on( 'DOMMouseScroll mousewheel', handleScroll );
+	$( window ).resize(() => {
+		if ( section !== -1 ) {
+			refreshScollAndCursor( $( $sections.get( section )));
 		}
 	});
 	$toggleSound.click(() => {
 		soundEnabled = !soundEnabled;
-		$soundIcon.removeClass(soundStates[!soundEnabled]).addClass(soundStates[soundEnabled]);
-		if(soundEnabled){
-			localStorage.removeItem('soundDisabled');
+		$soundIcon.removeClass( soundStates[!soundEnabled]).addClass( soundStates[soundEnabled]);
+		if ( soundEnabled ) {
+			localStorage.removeItem( 'soundDisabled' );
 		} else {
-			localStorage.setItem('soundDisabled', 'yes');
+			localStorage.setItem( 'soundDisabled', 'yes' );
 		}
-		if(currentUtter && !soundEnabled){
+		if ( currentUtter && !soundEnabled ) {
 			speechSynthesis.cancel();
 		}
 	});
 	$toggleAutoPlay.click(() => {
 		autoPlay = !autoPlay;
-		$autoPlayIcon.removeClass(autoPlayStates[!autoPlay]).addClass(autoPlayStates[autoPlay]);
+		$autoPlayIcon.removeClass( autoPlayStates[!autoPlay]).addClass( autoPlayStates[autoPlay]);
 	});
 	$fullScreen.click(() => {
-		$article.get(0)[fullScreenMethod]();
+		$article.get( 0 )[fullScreenMethod]();
 	});
 	(() => {
 		let startPos = false;
-		$resizeHandle.mousedown(event => {
-			if(event.buttons & 1){
+		$resizeHandle.mousedown( event => {
+			if ( event.buttons & 1 ) {
 				startPos = event.clientX;
 			}
-		})
-		$article.mousemove(event => {
-			if(startPos !== false){
-				console.log('Left mouse button pressed', startPos);
+		});
+		$article.mousemove( event => {
+			if ( startPos !== false ) {
+				console.log( 'Left mouse button pressed', startPos );
 			}
-		}).mouseup(event => {
-			if((event.buttons & 1) === 0){
+		}).mouseup( event => {
+			if ( 0 === ( event.buttons & 1 )) {
 				startPos = false;
 			}
 		});
 	})();
-	$toggleText.mousemove(event => {
+	$toggleText.mousemove( event => {
 		event.preventDefault();
 		event.stopPropagation();
 		return false;
-	}).click(console.log);
+	}).click( console.log );
 
 	// Initialize DOM
-	$soundIcon.addClass(soundStates[soundEnabled]);
-	$autoPlayIcon.addClass(autoPlayStates[autoPlay]);
-	$cursor.css({top: getVMiddle($caption.find('h1,h2,h3,h4,h5,h6')) - cursorHeight / 2});
+	$soundIcon.addClass( soundStates[soundEnabled]);
+	$autoPlayIcon.addClass( autoPlayStates[autoPlay]);
+	$cursor.css({top: getVMiddle( $caption.find( 'h1,h2,h3,h4,h5,h6' )) - cursorHeight / 2});
 	$progressIn.css({width: '0%'});
-	$sections.each((index, section) => {
-		section.id = `section-${index + 1}`;
+	$sections.each(( index, section ) => {
+		section.id = `section-${ index + 1 }`;
 	});
-	if(section !== -1){
-		$(speechSynthesis).on('voiceschanged', () => {
-			changeSlide(section, -1);
+	if ( section !== -1 ) {
+		$( speechSynthesis ).on( 'voiceschanged', () => {
+			changeSlide( section, -1 );
 		});
 	}
 });
