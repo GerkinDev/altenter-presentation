@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" integrity="sha256-/O+WvT2Eeb1RIU6iMItEhi5xlHTCLHg2HgLmVGFWyW8=" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="assets/styles/style.css"/>
+	</head>
+	<body>
+		<article class="triple-presentation">
+			<figure>
+				<figcaption>
+					<h1>Diaspora</h1>
+
+					<h2>Introduction</h2>
+
+					<section>Hmmm.... Il va falloir écrire cette première section, je n'ai pas d'inspiration</section>
+
+					<section>Diaspora est d'ores et déjà un gros projet, sur lequelle nous avons investi plus de 200h de travail.</section>
+
+					<section>Nous nous sommes imposés des processus de développement rigoureux, afin de maximiser maintenabilité,  fiabilité, qualité et compatibilité.
+						<ul>
+							<li>Les tests unitaires sont réalisés avec Travis-CI, CodeClimate & SauceLabs, sur Node 6, 7 et 8, ainsi que sur les navigateurs Google Chrome & Firefox.</li>
+							<li>Les dépendances sont inspectées pour d'éventuelles failles de sécurité en utilisant Gemnasium.</li>
+							<li>Une norme stricte est validée avec CodeClimate.</li>
+							<li>Enfin, la bibliothèque est concaténée et transtypée en EcmaScript 5.</li>
+						</ul>
+					</section>
+
+					<i id="cursor"></i>
+				</figcaption>
+				<div id="resize-handle">
+					<div id="toggle-text"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+				</div>
+				<img width="400" height="400" src=""/>
+			</figure>
+			<footer>
+				<div class="progress" data-progress="0%"><span></span></div>
+				<button id="toggle-autoplay" title="Toggle auto-play" class="player-button"><i class="fa" aria-hidden="true" aria-label="Toggle auto-play"></i></button>
+				<button id="enable-fullscreen" title="Go fullscreen" class="player-button"><i class="fa fa-arrows-alt" aria-hidden="true" aria-label="Toggle auto-play"></i></button>
+				<button id="toggle-sound" title="Toggle sound" class="player-button"><i class="fa" aria-hidden="true" aria-label="Toggle sound"></i></button>
+				<span>Something in the footer</span>
+			</footer>
+		</article>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="assets/js/presentation.js"></script>
+	</body>
+</html>

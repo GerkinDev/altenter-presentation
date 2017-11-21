@@ -1,0 +1,142 @@
+html, body{
+	height: 100%;
+}
+$progress-color: #fecf23;
+.triple-presentation {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	figure{
+		margin: 0; 
+		display: flex;
+		flex-direction: row;
+		justify-content: stretch;
+		flex: 1 1 100%;
+	}
+	#resize-handle{
+		border-left: 5px double #333;
+		cursor: ew-resize;
+		position: relative;
+	}
+	#toggle-text{
+		position: absolute;
+		right: 5px;
+		padding: 10px;
+		background-color: rgba(32,32,32,0.2);
+		border: 1px solid #aaa;
+		border-right: none;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+	}
+	figcaption {
+		flex: 1 1 auto;
+		overflow: auto;
+		position: relative;
+		padding: 0 15px;
+		text-align: justify;
+	}
+	section{
+		margin-bottom: 15px;
+		border-left: 0 solid $progress-color;
+		transition: 0.5s all;
+		margin-left: 0;
+		padding-left: 0;
+
+		&.active{
+			border-left-width: 5px;
+			margin-left: -10px;
+			padding-left: 5px;
+		}
+	}
+	img {
+		flex: 0 0 auto;
+		align-self: center;
+	}
+
+	$cursor-height:10px;
+	#cursor {
+		width: 0;
+		height: 0;
+		border-right: $cursor-height solid $progress-color;
+		border-top: $cursor-height solid transparent;
+		border-bottom: $cursor-height solid transparent;
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		opacity: 0;
+	}
+
+	$foot-padding: 10px;
+	$meter-height: 5px;
+	footer{
+		background-color: #333;
+		color: #ddd;
+		padding: $meter-height + $foot-padding $foot-padding $foot-padding;
+		text-align: center;
+	}
+	.player-button{
+		border-radius: 100%;
+		width: 2em;
+		height: 2em;
+		border: none;
+		background-color: #444;
+		font-size: 18px;
+		transition: 0.5s all;
+
+		&:hover{
+			background-color: darken($progress-color, 30%);
+		}
+	}
+
+
+	$meter-pad: 2px;
+	.progress {
+		background-color: #1a1a1a;
+		height: $meter-height;
+		padding: $meter-pad;
+		width: auto;
+		margin: -($foot-padding + $meter-height) #{-$foot-padding} $foot-padding;
+		border-radius: $meter-pad;
+		box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+		position: relative;
+
+		&::before{
+			content: attr(data-progress);
+			display: none;
+		}
+		span {
+			display: inline-block;
+			position: absolute;
+			top:$meter-pad;
+			bottom: $meter-pad;
+			left: 0;
+			background-color: $progress-color;
+			background-image: linear-gradient(to top, $progress-color, darken(saturate( $progress-color, 30% ), 10%));
+			border-radius: $meter-pad / 2;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+			transition: width .4s ease-in-out;
+
+			&::after {
+				content: '';
+				opacity: 0;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-radius: 3px;
+				animation: animate-shine 2s ease-out infinite;
+			}
+		}
+	}
+}
+@keyframes animate-shine { 
+	0% {opacity: 0; width: 0;}
+	50% {opacity: .5;}
+	100% {opacity: 0; width: 95%;}
+}

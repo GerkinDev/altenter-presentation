@@ -1,0 +1,137 @@
+/* line 1, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+html, body {
+  height: 100%; }
+
+/* line 5, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+.triple-presentation {
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
+  /* line 9, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation figure {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    flex: 1 1 100%; }
+  /* line 16, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation #resize-handle {
+    border-left: 5px double #333;
+    cursor: ew-resize;
+    position: relative; }
+  /* line 21, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation #toggle-text {
+    position: absolute;
+    right: 5px;
+    padding: 10px;
+    background-color: rgba(32, 32, 32, 0.2);
+    border: 1px solid #aaa;
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; }
+  /* line 34, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation figcaption {
+    flex: 1 1 auto;
+    overflow: auto;
+    position: relative;
+    padding: 0 15px;
+    text-align: justify; }
+  /* line 41, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation section {
+    margin-bottom: 15px;
+    border-left: 0 solid #fecf23;
+    transition: 0.5s all;
+    margin-left: 0;
+    padding-left: 0; }
+    /* line 48, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+    .triple-presentation section.active {
+      border-left-width: 5px;
+      margin-left: -10px;
+      padding-left: 5px; }
+  /* line 54, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation img {
+    flex: 0 0 auto;
+    align-self: center; }
+  /* line 60, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation #cursor {
+    width: 0;
+    height: 0;
+    border-right: 10px solid #fecf23;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0; }
+  /* line 75, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation footer {
+    background-color: #333;
+    color: #ddd;
+    padding: 15px 10px 10px;
+    text-align: center; }
+  /* line 81, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation .player-button {
+    border-radius: 100%;
+    width: 2em;
+    height: 2em;
+    border: none;
+    background-color: #444;
+    font-size: 18px;
+    transition: 0.5s all; }
+    /* line 90, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+    .triple-presentation .player-button:hover {
+      background-color: #876a01; }
+  /* line 97, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+  .triple-presentation .progress {
+    background-color: #1a1a1a;
+    height: 5px;
+    padding: 2px;
+    width: auto;
+    margin: -15px -10px 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+    position: relative; }
+    /* line 107, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+    .triple-presentation .progress::before {
+      content: attr(data-progress);
+      display: none; }
+    /* line 111, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+    .triple-presentation .progress span {
+      display: inline-block;
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      left: 0;
+      background-color: #fecf23;
+      background-image: linear-gradient(to top, #fecf23, #eebb00);
+      border-radius: 1px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+      transition: width .4s ease-in-out; }
+      /* line 123, /Users/gerkin/Desktop/Work/nodejs/Diaspora/demoprez/assets/styles/style.scss */
+      .triple-presentation .progress span::after {
+        content: '';
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        border-radius: 3px;
+        animation: animate-shine 2s ease-out infinite; }
+
+@keyframes animate-shine {
+  0% {
+    opacity: 0;
+    width: 0; }
+  50% {
+    opacity: .5; }
+  100% {
+    opacity: 0;
+    width: 95%; } }
+
+/*# sourceMappingURL=style.css.map */
