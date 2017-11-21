@@ -3,38 +3,38 @@ let a = [];
 let audioSections=[];
 let countDown = 6;
 for(let i=0;i<7;i++){
-    // Load and push sounds
-        source: 'file',
-	a.push(new Pizzicato.Sound({ 
-        options: { path: "./assets/sounds/snd-0"+(i+1)+".mp3" }
-    }, () => { // onLoad...
-            // all audio files are loaded
-        countDown--;
-        if (countDown === 0) {
-            for(let b=2;b<6;b++){
-                a[b].on("end", ()=>{
-                    a[b+1].play();
-                });
-            }
-        }
-    }));
+	// Load and push sounds
+	source: 'file',
+		a.push(new Pizzicato.Sound({ 
+		options: { path: "./assets/sounds/snd-0"+(i+1)+".mp3" }
+	}, () => { // onLoad...
+		// all audio files are loaded
+		countDown--;
+		if (countDown === 0) {
+			for(let b=2;b<6;b++){
+				a[b].on("end", ()=>{
+					a[b+1].play();
+				});
+			}
+		}
+	}));
 }
 audioSections.push(a[0]);
-
 audioSections.push(a[1]);
-
-}
-    return true;
-    
-    }
-        return false;
-    } else {
-        audioSections[section].play();    
-    if( section > 0 && section < audioSections.length ) {
-function playAudioSection( section, config ){
-// Audio function
-
 audioSections.push(a[2]);
+
+// Audio function
+function playAudioSection( section, config ){
+	if( section > 0 && section < audioSections.length ) {
+		return false;
+	} else {
+		audioSections[section].play();
+	}
+
+	return true;
+}
+
+
 // Get DOM elements
 const $article = $('article');
 const $caption = $('figcaption');
