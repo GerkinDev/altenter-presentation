@@ -60,10 +60,17 @@ html, body {
       .triple-presentation #toggle-text.text-hidden .fa {
         transform: scaleX(-1); }
   /* line 57, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
-  .triple-presentation img {
+  .triple-presentation #canvas-container {
     flex: 1 1 0;
-    align-self: center; }
-  /* line 61, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+    align-self: center;
+    min-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  /* line 65, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  .triple-presentation #canvas {
+    flex: 0 0 auto; }
+  /* line 68, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation figcaption {
     flex: 0 1 100%;
     min-width: 200px;
@@ -71,19 +78,19 @@ html, body {
     position: relative;
     padding: 0 15px;
     text-align: justify; }
-  /* line 69, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  /* line 76, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation section {
     margin-bottom: 15px;
     border-left: 0 solid #fecf23;
     transition: 0.5s all;
     margin-left: 0;
     padding-left: 0; }
-    /* line 76, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+    /* line 83, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
     .triple-presentation section.active {
       border-left-width: 5px;
       margin-left: -10px;
       padding-left: 5px; }
-  /* line 84, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  /* line 91, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation #cursor {
     width: 0;
     height: 0;
@@ -95,13 +102,13 @@ html, body {
     right: 0;
     top: 0;
     opacity: 0; }
-  /* line 99, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  /* line 106, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation footer {
     background-color: #333;
     color: #ddd;
     padding: 15px 10px 10px;
     text-align: center; }
-  /* line 105, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  /* line 112, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation .player-button {
     border-radius: 100%;
     width: 2em;
@@ -110,10 +117,10 @@ html, body {
     background-color: #444;
     font-size: 18px;
     transition: 0.5s all; }
-    /* line 114, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+    /* line 121, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
     .triple-presentation .player-button:hover {
       background-color: #876a01; }
-  /* line 121, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+  /* line 128, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
   .triple-presentation .progress {
     background-color: #1a1a1a;
     height: 5px;
@@ -123,11 +130,11 @@ html, body {
     border-radius: 2px;
     box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
     position: relative; }
-    /* line 131, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+    /* line 138, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
     .triple-presentation .progress::before {
       content: attr(data-progress);
       display: none; }
-    /* line 135, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+    /* line 142, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
     .triple-presentation .progress span {
       display: inline-block;
       position: absolute;
@@ -139,7 +146,7 @@ html, body {
       border-radius: 1px;
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
       transition: width .4s ease-in-out; }
-      /* line 147, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
+      /* line 154, /Users/gerkin/Desktop/Work/nodejs/altenter-presentation/assets/styles/style.scss */
       .triple-presentation .progress span::after {
         content: '';
         opacity: 0;

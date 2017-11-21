@@ -1,6 +1,7 @@
 // Get DOM elements
 const $article = $( 'article' );
 const $caption = $( 'figcaption' );
+const $figure = $('figure');
 const $sections = $caption.children( 'section' );
 const $progress = $( '.progress' );
 const $progressIn = $progress.children( 'span' );
@@ -142,7 +143,7 @@ const maybeAutoPlayNext = () => {
 
 $( document ).ready(() => {
 	// Bind events
-	$caption.on( 'DOMMouseScroll mousewheel', handleScroll );
+	$figure.on( 'DOMMouseScroll mousewheel', handleScroll );
 	$( window ).resize(() => {
 		if ( section !== -1 ) {
 			refreshScollAndCursor( $( $sections.get( section )));

@@ -54,9 +54,16 @@ $progress-color: #fecf23;
 			}
 		}
 	}
-	img {
+	#canvas-container {
 		flex: 1 1 0;
 		align-self: center;
+		min-width: 400px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	#canvas{
+		flex: 0 0 auto;
 	}
 	figcaption {
 		flex: 0 1 100%;
