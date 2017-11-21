@@ -1,33 +1,3 @@
-// Audio config
-let a = [];
-let audioSections = [];
-let countDown = 6;
-for ( let i = 0;i < 7;i++ ) {
-	// Load and push sounds
-	'file',
-	a.push( new Pizzicato.Sound({
-		source:  'file',
-		options: {
-			path: `./assets/sounds/snd-${ ( `00${   i + 1 }` ).slice( -2 ) }.mp3`,
-		},
-	}));
-}
-audioSections.push( a[0]);
-audioSections.push( a[1]);
-audioSections.push( a[2]);
-
-// Audio function
-function playAudioSection( section, config ) {
-	if ( section > -1 || section < audioSections.length ) {
-		audioSections[section].play();
-	} else {
-		return false;
-	}
-
-	return true;
-}
-
-
 // Get DOM elements
 const $article = $( 'article' );
 const $caption = $( 'figcaption' );
@@ -112,10 +82,12 @@ const changeSlide = ( to, from ) => {
 			autoPlay,
 			fullScreen: false,
 		});
-		// Start speech synthesis
-		speechForElement( target );
 		// Finalize
 		section = to;
+        
+        // Start speech synthesis
+		speechForElement( target );
+		
 		location.hash = target.id;
 	} else {
 		console.warn( 'Scroll not yet authorized' );
