@@ -6,17 +6,9 @@ for(let i=0;i<7;i++){
 	// Load and push sounds
 	source: 'file',
 		a.push(new Pizzicato.Sound({ 
-		options: { path: "./assets/sounds/snd-0"+(i+1)+".mp3" }
-	}, () => { // onLoad...
-		// all audio files are loaded
-		countDown--;
-		if (countDown === 0) {
-			for(let b=2;b<6;b++){
-				a[b].on("end", ()=>{
-					a[b+1].play();
-				});
-			}
-		}
+		options: {
+			path: `./assets/sounds/snd-${('00' + (i + 1)).slice(-2)}.mp3`
+		},
 	}));
 }
 audioSections.push(a[0]);
