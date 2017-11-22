@@ -85,10 +85,10 @@ const changeSlide = ( to, from ) => {
 		});
 		// Finalize
 		section = to;
-        
-        // Start speech synthesis
+
+		// Start speech synthesis
 		speechForElement( target );
-		
+
 		location.hash = target.id;
 	} else {
 		console.warn( 'Scroll not yet authorized' );
@@ -121,10 +121,14 @@ const speechForElement = element => {
 		// Function call already done
 	} else if ( supportsSpeechSynthesis && soundEnabled ) {
 		speechSynthesis.cancel();
+		window.isPlaying = true;
 		currentUtter = new SpeechSynthesisUtterance( getTextFromDomElement( element ));
 		currentUtter.voice = getVoice( document.documentElement.lang );
 		speechSynthesis.speak( currentUtter );
-		$( currentUtter ).on( 'end', maybeAutoPlayNext );
+		$( currentUtter ).on( 'end', () => {
+			window.isPlaying = false;
+			maybeAutoPlayNext();
+		});
 	}
 };
 const getVoice = lang => {
